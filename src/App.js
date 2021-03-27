@@ -1,10 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import HeaderNav from "../src/Components/HeaderNav";
 
 function App() {
   return (
-    <div className="App">
-
-    </div>
+    <HeaderNav/>
   );
 }
 
