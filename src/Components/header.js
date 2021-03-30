@@ -3,7 +3,7 @@ import "../App.css"
 function HeaderNav() {
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
                 <div className="container">
                     <a className="navbar-brand" href="#">CryptoBase</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -30,19 +30,8 @@ function HeaderNav() {
                     </div>
                 </div>
             </nav>
-            <header className="masthead">
-                <div className="container h-100">
-                    <div className="row h-100 align-items-center">
-                        <div className="col-12 text-center">
-                            <h1 className="font-weight-light text-white">Vertically Centered Masthead Content</h1>
-                            <p className="lead text-white">A great starter layout for a landing page</p>
-                        </div>
-                    </div>
-                </div>
-            </header>
         </>
     );
 }
-
-
 export default HeaderNav;
+
