@@ -1,54 +1,65 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import '../App.css';
 
 
-class Coin extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: []
-        };
-    }
+function Coins() {
+    const [coins, setCoins] = useState([]);
+    const [search, setSearch] = useState('');
 
-    componentDidMount() {
-        fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=10&page=1&sparkline=false")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({items: result})
-                }
+    useEffect(() => {
+        axios
+            .get(
+                'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false'
             )
-    }
+            .then(res => {
+                setCoins(res.data);
+                console.log(res.data);
+            })
+            .catch(error => console.log(error));
+    }, []);
 
-    render() {
-        const {items} = this.state;
-        return (
-            <>
-            <div className="shadow p-3 my-3 bg-white rounded h-100 ">Regular shadow
+    const handleChange = e => {
+        setSearch(e.target.value);
+    };
 
-                    {
-                        items.map(coin => (
-                            <div className="coin">
-                                <img className="coinImage" src={coin.image} width="50px" height="50px"></img>
-                                <div className="name">
-                                    <p>Crypto name <br/> <b>{coin.name}</b></p>
+    const filteredCoins = coins.filter(coin =>
+        coin.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+
+    return (
+        <>
+            <div className="shadow p-3 my-3 card-border">
+                <input type="text" placeholder="Search.." onChange={handleChange}/>
+            </div>
+            <div className="shadow p-3 my-3 card-border">
+                <div className="overflow-auto">
+                    <div className="height">
+                        {filteredCoins.map(coin => {
+                            return (
+                                <div className="coin">
+                                    <img className="coinImage" src={coin.image} width="50px" height="50px"></img>
+                                    <div className="text-coin">
+                                        <p>Crypto name <br/> <b>{coin.name}</b></p>
+                                    </div>
+                                    <div className="text-coin">
+                                        <p>Crypto price <br/> <b>{coin.price}</b></p>
+                                    </div>
+                                    <div className="text-coin">
+                                        <p>Crypto percentage <br/><b>{coin.priceChange}</b></p>
+                                    </div>
                                 </div>
-                                <div className="market">
-                                    <p>Crypto price <br/> <b>{coin.current_price}</b></p>
-                                </div>
-                                <div className="change">
-                                    <p>Crypto percentage <br/><b>{coin.price_change_percentage_24h}</b></p>
-                                </div>
-                            </div>
-                        ))
-                    }
+                            );
+                        })}
+                    </div>
                 </div>
+            </div>
+        </>
 
-            </>
+    )
 
-        )
-    }
 }
 
-export default Coin;
+export default Coins;
