@@ -1,6 +1,6 @@
 import React from 'react';
-import {signInWithGoogle} from './firebase.utils';
-import {auth} from './firebase.utils';
+import {signInWithGoogle} from './firebase/firebase.utils';
+import {auth} from './firebase/firebase.utils';
 
 class Login extends React.Component {
 
@@ -24,23 +24,25 @@ class Login extends React.Component {
         this.unsubscribeFromAuth();
     }
 
+
     render() {
+
         return (
             <>
                 {this.state.currentUser ? (
                         <div>
-                            <div className="shadow p-5 my-3 card-border card-color">
+                            <div className="shadow p-3 my-3 card-border card-color">
                                 <div className="row">
                                     <div className="col-12">
                                         <div className="d-flex flex-row">
                                             <div className="image mr-3"><img src={this.state.currentUser.photoURL}
-                                                                             className="rounded-circle" width="80"/></div>
-                                            <h6 className="my-2">Hi, {this.state.currentUser.displayName}</h6>
+                                                                             className="rounded-circle" width="60"/></div>
+                                            <div>
+                                                <h6 className="">Hi, {this.state.currentUser.displayName}</h6>
+                                                <button onClick={() => auth.signOut()} className="btn btn-danger">Uitloggen
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div className="d-flex justify-content-end">
-                                            <button onClick={() => auth.signOut()} className="btn btn-danger">LOG OUT</button>
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -59,12 +61,12 @@ class Login extends React.Component {
                                 </button>
                             </div>
                         </div>
-                        <div className="shadow p-5 my-3 card-border card-color blur">
+                        <div className="shadow p-3 my-3 card-border card-color blur">
                             <div className="row">
                                 <div className="col-12">
                                     <div className="d-flex flex-row">
                                         <div className="image mr-3"><img src="https://i.imgur.com/0LKZQYM.jpg"
-                                                                         className="rounded-circle" width="80"/></div>
+                                                                         className="rounded-circle" width="60"/></div>
                                         <h6 className="my-2">Hi,</h6>
                                     </div>
                                 </div>

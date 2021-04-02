@@ -44,8 +44,8 @@ b {
     border-radius: 10px;
 }
 .height{
-    height: 920px;
-    max-height: 920px;
+    height: 100vh;
+    max-height: 100vh;
 }
 
 .blur{
