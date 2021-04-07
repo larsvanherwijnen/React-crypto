@@ -11,7 +11,7 @@ function Coins() {
     useEffect(() => {
         axios
             .get(
-                'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false'
+                'https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=50&page=1&sparkline=false'
             )
             .then(res => {
                 setCoins(res.data);
@@ -19,6 +19,7 @@ function Coins() {
             })
             .catch(error => console.log(error));
     }, []);
+
 
     const handleChange = e => {
         setSearch(e.target.value);
@@ -42,13 +43,13 @@ function Coins() {
                                 <div className="coin">
                                     <img className="coinImage" src={coin.image} width="50px" height="50px"></img>
                                     <div className="text-coin">
-                                        <p>Crypto name <br/> <b>{coin.name}</b></p>
+                                        <p>Naam<br/> <b>{coin.name}({coin.symbol})</b></p>
                                     </div>
                                     <div className="text-coin">
-                                        <p>Crypto price <br/> <b>{coin.price}</b></p>
+                                        <p>Huidige price<br/> <b>€ {coin.current_price},-</b></p>
                                     </div>
                                     <div className="text-coin">
-                                        <p>Crypto percentage <br/><b>{coin.priceChange}</b></p>
+                                        <p>Procentuele verandering (24 uur) <br/><b>{coin.price_change_percentage_24h} %</b></p>
                                     </div>
                                 </div>
                             );
