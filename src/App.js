@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Coin from './Components/coins';
-// import HeaderNav from './Components/header';
 import Login from "./Components/login";
 import Setalert from "./Components/setalert"
 import React from "react";
