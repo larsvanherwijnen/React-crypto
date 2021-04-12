@@ -49,19 +49,18 @@ class SetAlert extends React.Component {
                 this.setState({alerts: alerts})
             })
         } else {
-            console.log('rre')
+            console.log('error')
         }
 
     }
 
-    unsubscribeFromAuth = null;
+
     componentDidMount() {
-        this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-            this.setState({currentUser1: user});
-        });
         this.fetchAPI();
 
-        this.readData();
+        this.interval = setInterval(() => {
+            this.readData();
+        }, 3000);
     }
 
 
