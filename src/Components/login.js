@@ -1,7 +1,6 @@
 import React from 'react';
-import {signInWithGoogle} from './firebase/firebase';
 import {auth} from './firebase/firebase';
-
+import {signInWithGoogle} from './firebase/firebase';
 
 class Login extends React.Component {
 
@@ -11,6 +10,7 @@ class Login extends React.Component {
             currentUser: null
         };
     }
+
     unsubscribeFromAuth = null;
 
     componentDidMount() {
@@ -22,8 +22,6 @@ class Login extends React.Component {
     componentWillUnmount() {
         this.unsubscribeFromAuth();
     }
-
-
 
     render() {
         return (

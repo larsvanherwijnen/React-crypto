@@ -1,8 +1,7 @@
 import React from 'react';
 import "../App.css"
-import {onCreate} from "./firebase/firebase";
 import firebase from "firebase";
-
+import {onCreate, auth} from "./firebase/firebase";
 
 class SetAlert extends React.Component {
     constructor() {
@@ -10,7 +9,7 @@ class SetAlert extends React.Component {
         this.state = {
             coins: [],
             alerts: [],
-            currentUser: null
+            currentUser1: null
         }
     }
 
@@ -35,29 +34,41 @@ class SetAlert extends React.Component {
             )
     }
 
-    readData() {
+
+     readData() {
         const db = firebase.firestore();
-        db.collection('alerts')
-            .get().then((querySnapshot) => {
-            const alerts = []
-            querySnapshot.forEach((doc) => {
-                const data = doc.data()
-                alerts.push(data)
+        console.log(this.state.currentUser1)
+        if(auth.currentUser != null){
+            db.collection('alerts').where('user_id', '==', auth.currentUser.uid )
+                .get().then((querySnapshot) => {
+                const alerts = []
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data()
+                    alerts.push(data)
+                })
+                this.setState({alerts: alerts})
             })
-            this.setState({alerts: alerts})
-        })
+        } else {
+            console.log('rre')
+        }
+
     }
 
+    unsubscribeFromAuth = null;
     componentDidMount() {
+        this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
+            this.setState({currentUser1: user});
+        });
         this.fetchAPI();
+
         this.readData();
     }
+
 
     render() {
         const {coins, alerts} = this.state;
         return (
             <>
-
                 <div className="shadow p-3 my-3 card-border card-color">
                     <form className="form-inline">
                         <label className="sr-only" htmlFor="inlineFormInputName2">Voor</label>
@@ -98,7 +109,6 @@ class SetAlert extends React.Component {
                         </div>
 
                     ) :
-
                     <div className="shadow p-3 my-3 card-border card-color">
                         <div className="overflow-auto">
                             <div className="height-alerts">
@@ -106,10 +116,7 @@ class SetAlert extends React.Component {
                             </div>
                         </div>
                     </div>
-
                 }
-
-
             </>
         );
     }
